@@ -32,7 +32,6 @@ class SpawnChrome(object):
         chrome_args = [CHROME_BIN] + [CHROME_PARAMS + self.project_path]
         # add any additional params passed to chrome
         chrome_args += self.chrome_args
-        print chrome_args
         subprocess.call(chrome_args)
 
     def ls_projects(self):

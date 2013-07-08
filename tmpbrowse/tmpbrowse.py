@@ -5,6 +5,7 @@ import argparse
 import os
 import subprocess
 import shutil
+import sys
 
 
 CHROME_BIN = 'google-chrome'
@@ -42,8 +43,8 @@ class SpawnChrome(object):
         shutil.rmtree(os.path.join(USER_DIRS, project))
 
 
-
-if __name__ == '__main__':
+def cli_run():
+    """docstring for cli_run"""
     parser = argparse.ArgumentParser(
         description='Spawn a sandboxed chrome instance per project')
     parser.add_argument('-p', '--project-name',
@@ -67,4 +68,9 @@ if __name__ == '__main__':
     if args[0].remove_project:
         spawn = SpawnChrome(args)
         spawn.rm_project(args[0].remove_project[0])
+    if len(sys.argv) == 1:
+        parser.print_help()
 
+
+if __name__ == '__main__':
+    cli_run()

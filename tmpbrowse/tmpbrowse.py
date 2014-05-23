@@ -8,14 +8,21 @@ import shutil
 import sys
 
 
-CHROME_BIN = 'google-chrome'
+DEFAULT_CHROME_BIN = 'google-chrome'
 CHROME_PARAMS = '--user-data-dir='
 USER_DIRS = os.path.join(os.environ['HOME'], '.chrome_dirs')
 
-class SpawnChrome(object):
+class SpawnBrowser(object):
     def __init__(self, args):
         self.my_args = args[0]
         self.chrome_args = args[1]
+
+        if self.my_args.browser_bin is not None:
+            self.browser_bin = self.my_args.browser_bin
+        else:
+            self.browser_bin = DEFAULT_CHROME_BIN
+        
+
         if self.my_args.project_name:
             self.project_name = self.my_args.project_name
             self.project_path = os.path.join(USER_DIRS, self.project_name)
@@ -29,7 +36,7 @@ class SpawnChrome(object):
 
     def spawn_chrome(self):
         # build the base chrome command
-        chrome_args = [CHROME_BIN] + [CHROME_PARAMS + self.project_path]
+        chrome_args = [self.browser_bin] + [CHROME_PARAMS + self.project_path]
         # add any additional params passed to chrome
         chrome_args += self.chrome_args
         subprocess.call(chrome_args)
@@ -50,22 +57,27 @@ def cli_run():
                         help='Project name to spawn a chrome instance for ')
     parser.add_argument('-l', help='List existing chrome project dirs',
                         action='store_true')
+    parser.add_argument('--browser-bin', dest='browser_bin',
+                        help='Custom browser binary to call')
+
     parser.add_argument('-d', '--remove-project',
             help='Removes the corresponding project dir from chrome dirs',
             nargs=1)
+
     args = parser.parse_known_args()
 
+
     if args[0].project_name:
-        spawn = SpawnChrome(args)
+        spawn = SpawnBrowser(args)
         spawn.mk_project_dir()
         spawn.spawn_chrome()
 
     if args[0].l:
-        spawn = SpawnChrome(args)
+        spawn = SpawnBrowser(args)
         spawn.ls_projects()
 
     if args[0].remove_project:
-        spawn = SpawnChrome(args)
+        spawn = SpawnBrowser(args)
         spawn.rm_project(args[0].remove_project[0])
     if len(sys.argv) == 1:
         parser.print_help()

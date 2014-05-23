@@ -1,13 +1,11 @@
-=====================================
-tmpbrowse - Spawn test browser sessions
-=====================================
+tmpbrowse - Spawn browser sessions for testing
+----------------------------------------------
 
-This tool helps you spawn temporary browser sessions (only chrome for instance)
-in a sandboxed user dir to securely test your web app without worrying about
+This tool helps you spawn temporary browser sessions in a sandboxed user dir to securely test your web app without worrying about
 clearing cache, extensions ... 
 
 Installation
-============
+------------
 
 Using pypi repository::
 
@@ -19,12 +17,11 @@ Forking this repo::
 
 
 Usage
-=====
+-----
 
-::
 
 TODO
-====
+----
 
 - Better browser abstraction
 

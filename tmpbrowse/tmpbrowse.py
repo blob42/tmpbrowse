@@ -52,7 +52,7 @@ class SpawnBrowser(object):
 def cli_run():
     """docstring for cli_run"""
     parser = argparse.ArgumentParser(
-        description='Spawn a sandboxed chrome instance per project')
+        description='Spawn a sandboxed chrome instance per project (or other browsers)')
     parser.add_argument('-p', '--project-name',
                         help='Project name to spawn a chrome instance for ')
     parser.add_argument('-l', help='List existing chrome project dirs',
